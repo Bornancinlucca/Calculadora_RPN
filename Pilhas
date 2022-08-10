@@ -1,0 +1,71 @@
+from time import process_time
+
+pilha = []
+i = 1
+
+def push(pilha, int):
+  pilha.append(int)
+
+def pull(pilha):
+  return pilha.pop()
+
+print("\n===================== MENU =======================\n")
+print("[1]- Gerar pilha de um a um milhão.")
+print("[2]- Somar todos os números da pilha.")
+print("[3]- Verificar a presença de um número na pilha.")
+print("[0]- Encerrar sessão.")
+opcao = input("\nO que deseja fazer? ")
+
+while opcao != 0:
+  if opcao == "1":
+    Ig = process_time()
+    while len(pilha) != 1000000:
+      numero = i
+      push(pilha, numero)
+      i += 1
+    Fg = process_time()
+    print("\nTempo de geração da pilha :", Fg - Ig, "s")
+    
+  print("\n\n===================== MENU =======================\n")
+  print("[1]- Gerar pilha de um a um milhão.")
+  print("[2]- Somar todos os números da pilha.")
+  print("[3]- Verificar a presença de um número na pilha.")
+  print("[0]- Encerrar sessão.")
+  opcao = input("\nO que deseja fazer? ")
+
+  if opcao == "2" and len(pilha) != 0:
+    Is_down = process_time()
+    while len(pilha) != 1:
+      x = pull(pilha)
+      y = pull(pilha)
+      soma = x + y
+      push(pilha,soma)
+    Fs_down = process_time()
+    i=0
+    Is_up = process_time()
+    while len(pilha) != 1:
+      x2 = pilha.pop(i)
+      y2 = pilha.pop(i+1)
+      i += 1
+      soma2 = x2 + y2
+      push(pilha,soma2)
+    Fs_up = process_time()
+    
+    print("\nSoma de todos os valores da pilha : ", soma)
+    print("Somatório (de cima para baixo): ", Fs_down - Is_down, " s")
+    print("Somatório (de baixo para cima): ", Fs_up - Is_up, " s")
+    
+  elif opcao =="2" and len(pilha) <= 0:
+    print("Nenhuma pilha foi gerada anteriormente, favor tentar novamente...")
+      
+  print("\n\n===================== MENU =======================\n")
+  print("[1]- Gerar pilha de um a um milhão.")
+  print("[2]- Somar todos os números da pilha.")
+  print("[3]- Verificar a presença de um número na pilha.")
+  print("[0]- Encerrar sessão.")
+  opcao = input("\nO que deseja fazer? ")
+
+  if opcao == "3":
+    n = input("Entre com o número que deseja buscar na pilha: ")
+
+print("Sessão encerrada...")
