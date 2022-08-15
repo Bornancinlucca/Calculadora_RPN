@@ -1,7 +1,20 @@
-from time import process_time
+# LUCCA BORNANCIN PEDRONI SILVA
+'''
+Sua  tarefa  será  construir  um  código  capaz de  somar,  item  a  item,  todos os  inteiros  entre  1  e 
+1.000.000. Existe, pelo menos uma fórmula matemática que pode ser usada para validar o resultado. 
+Contudo,  você  deverá  criar  uma  pilha,  armazenar  este  inteiros  nesta  pilha,  depois  percorrer    pilha 
+somando estes valores. A tarefa é para exercitar o uso de pilhas, não da matemática.  
+Seu  objetivo  será  medir  o  tempo  para  inserção  de  1.000.000  milhão  de  inteiros  em  uma 
+estrutura  de  dados  e  o  tempo  para  percorrer  e  somar  1.000.000  de  inteiros  em  uma  determinada 
+estrutura de dados, e o tempo para garantir que um determinado inteiro já está na pilha. Finalmente 
+você deverá medir estes tempos percorrendo a pilha em dois sentidos. De cima para baixo e de baixo 
+para cima. 
+Seu resultado será a média dos tempos gastos para as operações citadas acima em, no mímino 
+50 operações de cada tipo. As saídas apresentadas devem seguir o seguinte padrão: operação: tempo
+'''
 
-pilha = []
-i = 1
+from time import process_time
+import random
 
 def push(pilha, int):
   pilha.append(int)
@@ -9,63 +22,60 @@ def push(pilha, int):
 def pull(pilha):
   return pilha.pop()
 
-print("\n===================== MENU =======================\n")
-print("[1]- Gerar pilha de um a um milhão.")
-print("[2]- Somar todos os números da pilha.")
-print("[3]- Verificar a presença de um número na pilha.")
-print("[0]- Encerrar sessão.")
-opcao = input("\nO que deseja fazer? ")
+contador = 0
+tt1 = process_time()
+while contador < 50:
+  pilha = []
+  i = 1
+  
+  geracao = []
+  somas = []
+  busca = []
 
-while opcao != 0:
-  if opcao == "1":
-    Ig = process_time()
-    while len(pilha) != 1000000:
-      numero = i
-      push(pilha, numero)
-      i += 1
-    Fg = process_time()
-    print("\nTempo de geração da pilha :", Fg - Ig, "s")
-    
-  print("\n\n===================== MENU =======================\n")
-  print("[1]- Gerar pilha de um a um milhão.")
-  print("[2]- Somar todos os números da pilha.")
-  print("[3]- Verificar a presença de um número na pilha.")
-  print("[0]- Encerrar sessão.")
-  opcao = input("\nO que deseja fazer? ")
-
-  if opcao == "2" and len(pilha) != 0:
-    Is_down = process_time()
+  Ig = process_time()
+  while len(pilha) != 1000000:
+    numero = i
+    push(pilha, numero)
+    i += 1
+  Fg = process_time()
+  t1 = Fg-Ig
+  print("Contador: ", contador+1)
+  print("\n>> Geração da pilha :", round(t1,4)," s")
+  pilha2 = pilha.copy()
+  geracao.append(round(t1,4))
+  
+  if len(pilha) != 0:
+    Is = process_time()
     while len(pilha) != 1:
       x = pull(pilha)
       y = pull(pilha)
       soma = x + y
       push(pilha,soma)
-    Fs_down = process_time()
-    i=0
-    Is_up = process_time()
-    while len(pilha) != 1:
-      x2 = pilha.pop(i)
-      y2 = pilha.pop(i+1)
-      i += 1
-      soma2 = x2 + y2
-      push(pilha,soma2)
-    Fs_up = process_time()
-    
-    print("\nSoma de todos os valores da pilha : ", soma)
-    print("Somatório (de cima para baixo): ", Fs_down - Is_down, " s")
-    print("Somatório (de baixo para cima): ", Fs_up - Is_up, " s")
-    
-  elif opcao =="2" and len(pilha) <= 0:
-    print("Nenhuma pilha foi gerada anteriormente, favor tentar novamente...")
-      
-  print("\n\n===================== MENU =======================\n")
-  print("[1]- Gerar pilha de um a um milhão.")
-  print("[2]- Somar todos os números da pilha.")
-  print("[3]- Verificar a presença de um número na pilha.")
-  print("[0]- Encerrar sessão.")
-  opcao = input("\nO que deseja fazer? ")
+    Fs = process_time()
+        
+  t = Fs - Is
+  print("\n>> Soma de todos os valores da pilha : ", soma)
+  print(">> Somatório de todos os números: ",round(t,4))
+  somas.append(round(t,4))
+  
+  i=0
+  num = random.randint(0,1000000)
+  t1 = process_time()
+  for i in pilha2:
+    if num == i:
+      print("\n>> Número "+ str(num) +" encontrado!")
+  t2 = process_time()
+  t3 = t2 - t1
+  print(">> Busca de número: ", round(t3, 4), " s")
+  print("-------------------------------------------------------------")
+  busca.append(round(t3,4))
+  contador += 1
+  tt2 = process_time()
+med1 = sum(geracao)/len(geracao)
+med2 = sum(somas)/len(somas)
+med3 = sum(busca)/len(busca)
 
-  if opcao == "3":
-    n = input("Entre com o número que deseja buscar na pilha: ")
-
-print("Sessão encerrada...")
+print("\n==> Tempo decorrido para 50 operações: ", round(tt2-tt1,4)," s")
+print("\n==> Média do tempo de geração da pilha: ", str(med1), " s")
+print("==> Média do tempo de soma dos elementos da pilha: ", str(med2), " s")
+print("==> Média do tempo de busca na pilha: ", str(med1), " s")
