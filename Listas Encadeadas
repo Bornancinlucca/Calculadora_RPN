@@ -1,0 +1,240 @@
+#LUCCA BORNANCIN PEDRONI SILVA
+
+'''
+Sua  tarefa  será  construir  uma  estrutura  de  dados,  baseada  em  listas  encadeadas  sem  usar 
+qualquer  estrutura  de  dados  já  disponíveis  nas  linguagens  de  programação.  Lembre-se  que  para  tal 
+você precisará definir uma aquitetura de memória e, no mínimo, os métodos de inclusão, exclusão e 
+busca de dados nesta estrutura.  
+Você deverá criar uma lista com, no mínimo, 200.000 itens armazenados. Estes itens devem ser 
+números inteiros randomicamente gerados (use o twister de Mersenne para gerar os inteiros), em um 
+range de 1 a 1.000.000. Seu objetivo será medir o tempo para criar a lista, o tempo para reverter esta 
+lista, o tempo necessário para encontrar o item que está no meio da lista e o tempo necessário para 
+apagar todos os itens da lista, liberando a memória.  
+Caso o número de itens na sua lista seja impar, o item do meio será o item que estiver no lado 
+inferior da lista. 
+A  saída  deste  programa  será:  o  item  que  está  no  meio  da  lista  e  os  tempos  que  devem  ser 
+medidos. A formatação da saída fica a seu critério.
+'''
+
+import random
+from time import process_time
+
+# DEFINIÇÃO DAS FUNÇÕES #
+def inserir_final(inteiro, lista):
+  lista.append(inteiro)
+  
+def esvazia(lista):
+  lista.clear()
+
+print("========================= TRABALHO 04 - LISTAS ENCADEADAS =========================")
+print("\n{01} Criar Lista Encadeada.")
+print("{02} Reverter Lista Encadeada.")
+print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+print("{04} Esvaziar Lista Encadeada.")
+print("{00} Encerrar Sessão.")
+i = int(input("\nO que deseja fazer? "))
+while int(i) != 0:
+  lista_encadeada = []
+  if int(i) == 1:# CRIAÇÃO DA LISTA ENCADEADA #
+    j = input("Digite a quantidade de números da lista encadeada: ")
+    lista_encadeada.clear()
+    if int(j) >= 200000:
+      t0 = process_time()
+      while len(lista_encadeada) < int(j):
+        aleatorio = random.randint(1,1000000)
+        inserir_final(aleatorio, lista_encadeada)  
+      t1 = process_time()
+      t_criar = t1 - t0
+      
+      print("\n>> Lista Encadeada Criada com Sucesso!")
+      print(">> Tempo de Criação da Lista Encadeada: ", t_criar,"s")
+      print("\n==================================================")
+      print("\n{01} Criar Lista Encadeada.")
+      print("{02} Reverter Lista Encadeada.")
+      print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+      print("{04} Esvaziar Lista Encadeada.")
+      print("{00} Encerrar Sessão.")
+      i = input("\nO que deseja fazer? ")
+    else:
+      print("\nNúmero digitado é menor do que 200.000!")
+      print("\n==================================================")
+      print("\n{01} Criar Lista Encadeada.")
+      print("{02} Reverter Lista Encadeada.")
+      print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+      print("{04} Esvaziar Lista Encadeada.")
+      print("{00} Encerrar Sessão.")
+      i = input("\nO que deseja fazer? ")
+      
+  if int(i) == 2:# REVERTENDO A LISTA #
+    a = len(lista_encadeada)
+    lista_reversa = []
+    t2 = process_time()
+    while a > 0:
+      r = lista_encadeada[a-1]
+      inserir_final(r, lista_reversa)
+      a -= 1
+    lista_encadeada = lista_reversa
+    t3 = process_time()
+    t_reverter = t3 - t2
+    print("\n>> Tempo de Reversão da Lista Encadeada: ", t_reverter,"s\n")
+    print("\n==================================================")
+    print("\n{01} Criar Lista Encadeada.")
+    print("{02} Reverter Lista Encadeada.")
+    print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+    print("{04} Esvaziar Lista Encadeada.")
+    print("{00} Encerrar Sessão.")
+    i = input("\nO que deseja fazer? ")
+
+  if int(i) == 3:# ENCONTRANDO O ITEM NO MEIO DA LISTA #
+    t4 = process_time()
+    l=len(lista_encadeada)
+    if l%2 == 0:
+      med = l/2
+      num_meio = lista_encadeada[int(med-1)]
+      print("Número ",str(num_meio)," encontrado na posição ",str(med))
+      print(lista_encadeada)
+    elif l%2 != 0:
+      med = l/2+0.5
+      num_meio = lista_encadeada[int(med)]
+      print("Número ",str(num_meio)," encontrado na posição ",str(med-1))
+    t5 = process_time()
+    t_meio = t5 - t4
+    print("Tempo decorrido para encontrar o número do meio: ",t_meio,"s")
+
+    print("\n==================================================")
+    print("\n{01} Criar Lista Encadeada.")
+    print("{02} Reverter Lista Encadeada.")
+    print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+    print("{04} Esvaziar Lista Encadeada.")
+    print("{00} Encerrar Sessão.")
+    i = input("\nO que deseja fazer? ")
+    
+  if int(i) == 4:# ESVAZIANDO A LISTA #
+    t6 = process_time()
+    esvazia(lista_encadeada)
+    t7 = process_time()
+    t_esvaziar = t7-t6
+    print("\n>> Lista Encadeada foi esvaziada!")
+    print("Tempo decorrido no esvaziamento da lista encadeada: ",t_esvaziar,"s")
+
+    print("\n==================================================")
+    print("\n{01} Criar Lista Encadeada.")
+    print("{02} Reverter Lista Encadeada.")
+    print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+    print("{04} Esvaziar Lista Encadeada.")
+    print("{00} Encerrar Sessão.")
+    i = input("\nO que deseja fazer? ")
+    
+print("SESSÃO ENCERRADA COM SUCESSO!")
+
+
+import random
+from time import process_time
+
+# DEFINIÇÃO DAS FUNÇÕES #
+def inserir_final(inteiro, lista):
+  lista.append(inteiro)
+  
+def esvazia(lista):
+  lista.clear()
+
+print("========================= TRABALHO 04 - LISTAS ENCADEADAS =========================")
+print("\n{01} Criar Lista Encadeada.")
+print("{02} Reverter Lista Encadeada.")
+print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+print("{04} Esvaziar Lista Encadeada.")
+print("{00} Encerrar Sessão.")
+i = int(input("\nO que deseja fazer? "))
+while int(i) != 0:
+  lista_encadeada = []
+  if int(i) == 1:# CRIAÇÃO DA LISTA ENCADEADA #
+    j = input("Digite a quantidade de números da lista encadeada: ")
+    lista_encadeada.clear()
+    if int(j) >= 200000:
+      t0 = process_time()
+      while len(lista_encadeada) < int(j):
+        aleatorio = random.randint(1,1000000)
+        inserir_final(aleatorio, lista_encadeada)  
+      t1 = process_time()
+      t_criar = t1 - t0
+      
+      print("\n>> Lista Encadeada Criada com Sucesso!")
+      print(">> Tempo de Criação da Lista Encadeada: ", t_criar,"s")
+      print("\n==================================================")
+      print("\n{01} Criar Lista Encadeada.")
+      print("{02} Reverter Lista Encadeada.")
+      print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+      print("{04} Esvaziar Lista Encadeada.")
+      print("{00} Encerrar Sessão.")
+      i = input("\nO que deseja fazer? ")
+    else:
+      print("\nNúmero digitado é menor do que 200.000!")
+      print("\n==================================================")
+      print("\n{01} Criar Lista Encadeada.")
+      print("{02} Reverter Lista Encadeada.")
+      print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+      print("{04} Esvaziar Lista Encadeada.")
+      print("{00} Encerrar Sessão.")
+      i = input("\nO que deseja fazer? ")
+      
+  if int(i) == 2:# REVERTENDO A LISTA #
+    a = len(lista_encadeada)
+    lista_reversa = []
+    t2 = process_time()
+    while a > 0:
+      r = lista_encadeada[a-1]
+      inserir_final(r, lista_reversa)
+      a -= 1
+    lista_encadeada = lista_reversa
+    t3 = process_time()
+    t_reverter = t3 - t2
+    print("\n>> Tempo de Reversão da Lista Encadeada: ", t_reverter,"s\n")
+    print("\n==================================================")
+    print("\n{01} Criar Lista Encadeada.")
+    print("{02} Reverter Lista Encadeada.")
+    print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+    print("{04} Esvaziar Lista Encadeada.")
+    print("{00} Encerrar Sessão.")
+    i = input("\nO que deseja fazer? ")
+
+  if int(i) == 3:# ENCONTRANDO O ITEM NO MEIO DA LISTA #
+    t4 = process_time()
+    l=len(lista_encadeada)
+    if l%2 == 0:
+      med = l/2
+      num_meio = lista_encadeada[int(med-1)]
+      print("Número ",str(num_meio)," encontrado na posição ",str(med))
+      print(lista_encadeada)
+    elif l%2 != 0:
+      med = l/2+0.5
+      num_meio = lista_encadeada[int(med)]
+      print("Número ",str(num_meio)," encontrado na posição ",str(med-1))
+    t5 = process_time()
+    t_meio = t5 - t4
+    print("Tempo decorrido para encontrar o número do meio: ",t_meio,"s")
+
+    print("\n==================================================")
+    print("\n{01} Criar Lista Encadeada.")
+    print("{02} Reverter Lista Encadeada.")
+    print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+    print("{04} Esvaziar Lista Encadeada.")
+    print("{00} Encerrar Sessão.")
+    i = input("\nO que deseja fazer? ")
+    
+  if int(i) == 4:# ESVAZIANDO A LISTA #
+    t6 = process_time()
+    esvazia(lista_encadeada)
+    t7 = process_time()
+    t_esvaziar = t7-t6
+    print("\n>> Lista Encadeada foi esvaziada!")
+    print("Tempo decorrido no esvaziamento da lista encadeada: ",t_esvaziar,"s")
+
+    print("\n==================================================")
+    print("\n{01} Criar Lista Encadeada.")
+    print("{02} Reverter Lista Encadeada.")
+    print("{03} Encontrar o Elemento no Meio da Lista Encadeada.")
+    print("{04} Esvaziar Lista Encadeada.")
+    print("{00} Encerrar Sessão.")
+    i = input("\nO que deseja fazer? ")
+    
+print("SESSÃO ENCERRADA COM SUCESSO!")
