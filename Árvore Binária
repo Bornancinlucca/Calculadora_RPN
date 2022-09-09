@@ -1,0 +1,221 @@
+#LUCCA BORNANCIN
+'''
+Sua  tarefa  será  construir  uma  árvore  binária,  lembrando  que  árvore  binária  são  aquelas  que 
+possuem  no  máximo  dois  filhos  em  cada  vértice.  Esta  árvore  será  gerada  de  forma  aleatória  e  deve 
+possuir  um  número  de  vértices  aleatoriamente  selecionado  entre  10  e  26  vértices.  Para  criar  esta 
+árvore você irá criar um array capaz de armazenar uma quantidade de itens equivalente ao número de 
+vértices da árvore que será gerada e preencher estes vértices com valores aleatórios entre 1 e 1000. 
+Este array será usado para montar a árvore a árvore binária.  
+Você deverá criar uma regra de montagem para varrer o array e colocar seus valores nos 
+vértices da árvore. Com a árvore binária montada, no terminal, você deverá apresentar as seguintes 
+saídas: 
+a) A impressão do array gerado no formato apresentado a seguir para apenas 5 vertices:  
+Array Gerado: [1, 12, 45, 3, 6] 
+b) A impressão da árvore em ASCII usando o modelo a seguir que mostra uma árvore com o 
+valor 12 na raiz, com dois filhos com os valores 5 e 1. Nesta árvore o vértice de valor 5 possui 
+dois filhos com valores 11 e 2. 
+12 
+ + 5 
+       +11 
+       +2 
+ +1 
+Observe que os nós estão sendo deslocados horizontalmente por meio do caracter tab 
+“\t” de forma que os vértices filhos estão deslocados para direita de um tab em relação 
+ao seu pai. Todas as linhas começam com + para indicar que é um vértice.  
+c) A  impressão  dos  valores  armazenados  no  vértices  da  árvore  usando  os  algoritmos  de 
+transversalidade in-order, pre-order e post-order, segundo os modelos a seguir nos quais os 
+valores utilizados são meramente ilustrativos:  
+ In-order: {D, B, E, A, F, C, G} 
+ Pre-order: {A, B, D, E, C, F, G}  
+ Post-order: {D, E, B, F, G, C, A} 
+d) Uma lista dos valores armazenados em todas as folhas da árvore gerada segundo o modelo 
+a seguir, para apenas 5 folhas:  
+Folhas: [1, 5, 7, 8, 12] 
+e) Uma lista do resultado da busca de 10 valores aleatoriamente gerados entre 300 e 575 e o 
+diagnóstico da existência, ou não, deste número na árvore gerada. Este diagnóstico deve ser 
+feito com as palavras: presente e ausente, conforme o modelo a seguir para dois valores :  
+Valor gerado: 312; Diagnóstico: Presente 
+Valor gerado: 542; Diagnóstico: Ausente 
+'''
+from random import randint
+
+class TreeNode:
+  def __init__(self,value):
+    self.value = value
+    self.left = None
+    self.right = None
+  def __str__(self):
+    return str(self.value)
+    
+class BinaryTree:
+  def __init__(self,value=None):
+    if value:
+      node = TreeNode(value)
+      self.root = node
+    else:
+      self.root = None
+
+  def pre_order(self,node=None):
+    if node is None:
+      node = self.root
+    print(node,end='')
+    print(",",end="")
+    if node.left:
+      self.pre_order(node.left)
+      print(",",end="")
+    if node.right:
+      self.pre_order(node.right)
+      print(",",end="")
+  
+  def in_order(self, node=None):
+    if node is None:
+      node = self.root
+    if node.left:
+      self.in_order(node.left)
+      print(",",end="")
+    print(node,end='')
+    print(",",end="")
+    if node.right:
+      self.in_order(node.right)
+      print(",",end="")
+    
+  def post_order(self, node=None):
+    if node is None:
+      node = self.root
+    if node.left:
+      self.post_order(node.left)
+      print(",",end="")
+    if node.right:
+      self.post_order(node.right)
+      print(",",end="")
+    print(node,end='')
+    
+  def leaves(self,node=None):
+    if node is None:
+      node = self.root
+    if node.left != None:
+      self.leaves(node.left)
+    if node.right != None:
+      self.leaves(node.right)
+    if node.left is None and node.right is None:
+      print(node.value,end='')
+      print(',',end='')
+    
+def search(number,list):
+  if number in list:
+    print("Valor gerado:",number,"; Diagnóstico: Presente")
+  else:
+    print("Valor gerado:",number,"; Diagnóstico: Ausente")
+      
+array=[None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None]
+num_nodes = randint(10,26)
+i=0
+while i != num_nodes:
+  random = randint(1, 1000)
+  array[i] = random
+  i+=1
+print("\nArray Gerado:",array)
+
+tree = BinaryTree()
+
+a= TreeNode(array[0])
+
+b= TreeNode(array[1])
+c= TreeNode(array[2])
+
+d= TreeNode(array[3])
+e= TreeNode(array[4])
+f= TreeNode(array[5])
+g= TreeNode(array[6])
+
+h= TreeNode(array[7])
+i= TreeNode(array[8])
+j= TreeNode(array[9])
+k= TreeNode(array[10])
+l= TreeNode(array[11])
+m= TreeNode(array[12])
+n= TreeNode(array[13])
+o= TreeNode(array[14])
+
+p= TreeNode(array[15])
+q= TreeNode(array[16])
+r= TreeNode(array[17])
+s= TreeNode(array[18])
+t= TreeNode(array[19])
+u= TreeNode(array[20])
+v= TreeNode(array[21])
+w= TreeNode(array[22])
+x= TreeNode(array[23])
+y= TreeNode(array[24])
+z= TreeNode(array[25])
+
+tree.root = a
+a.left = b
+a.right = c
+b.left = d
+b.right = e
+c.left = f
+c.right = g
+d.left = h
+d.right = i
+e.left = j
+e.right = k
+f.left = l
+f.right = m
+g.left = n
+g.right = o
+h.left = p
+h.right = q
+i.left = r
+i.right = s
+j.left = t
+j.right = u
+k.left = v
+k.right = w
+l.left = x
+l.right = y
+m.left = z
+
+print("\n",a)
+print("\t+",b)
+print("\t\t+",d)
+print("\t\t\t+",h)
+print("\t\t\t\t+",p)
+print("\t\t\t\t+",q)
+print("\t\t\t+",i)
+print("\t\t\t\t+",r)
+print("\t\t\t\t+",s)
+print("\t\t+",e)
+print("\t\t\t+",j)
+print("\t\t\t\t+",t)
+print("\t\t\t\t+",u)
+print("\t\t\t+",k)
+print("\t\t\t\t+",v)
+print("\t\t\t\t+",w)
+print("\t+",c)
+print("\t\t+",f)
+print("\t\t\t+",l)
+print("\t\t\t\t+",x)
+print("\t\t\t\t+",y)
+print("\t\t\t+",m)
+print("\t\t\t\t+",z)
+print("\t\t+",g)
+print("\t\t\t+",n)
+print("\t\t\t+",o)
+
+print("\nPre-Order: ",end='')
+print("{",end=''),tree.pre_order(),print("}")
+print("\n\nIn-Order: ",end='')
+print("{",end=''),tree.in_order(),print("}")
+print("\n\nPost-Order: ",end='')
+print("{",end=''),tree.post_order(),print("}")
+print("\n\nLeaves: ",end='')
+print("[",end=''),tree.leaves(),print("]",end='')
+print("\n\n")
+print_search = []
+
+aux = 0
+while aux != 11:
+  num_search = randint(300,575)
+  search(num_search,array)
+  aux += 1
