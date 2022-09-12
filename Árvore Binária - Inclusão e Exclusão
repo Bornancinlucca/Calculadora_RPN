@@ -1,0 +1,202 @@
+#LUCCA BORNANCIN PEDRONI SILVA
+'''
+Sua tarefa será construir uma árvore binária de busca, lembrando que árvore binária de busa 
+são árvores que possuem no máximo dois filho de tal forma que o valor utilizado como chave, ou índice 
+da árvore deve seguir a seguinte regra:  
+O índice do filho à esquerda será menor que o índice do vértice pai (raiz) e o índice deste vértice 
+pai será menor que o índice do filho à direita.  
+A  árvore  deverá  ser  gerada  de  forma  aleatória  e  deve  possuir  um  número  de  vértices 
+aleatoriamente selecionado entre 10 e 26 vértices. Para criar esta árvore você irá criar um array capaz 
+de armazenar uma quantidade de itens equivalente ao número de vértices da árvore que será gerada 
+e preencher estes vértices com valores aleatórios entre 1 e 1000. Este array será usado para montar a 
+árvore binária de busca.  
+Você deverá criar uma regra de montagem para varrer o array e colocar seus valores nos 
+vértices da árvore. Com a árvore binária de busca montada, no terminal, você deverá apresentar as 
+seguintes saídas: 
+a) A impressão do array gerado no formato apresentado a seguir para apenas 5 vertices:  
+Array Gerado: [1, 12, 45, 3, 6] 
+b) A impressão da árvore em ASCII usando o modelo a seguir que mostra uma árvore com o 
+valor 12 na raiz, com dois filhos com os valores 5 e 1. Nesta árvore o vértice de valor 5 possui 
+dois filhos com valores 11 e 2. 
+12 
+ + 5 
+       +11 
+       +2 
+ +1 
+Observe que os nós estão sendo deslocados horizontalmente por meio do caracter tab 
+“\t” de forma que os vértices filhos estão deslocados para direita de um tab em relação 
+ao seu pai. Todas as linhas começam com + para indicar que é um vértice.  
+c) A  impressão  dos  valores  armazenados  no  vértices  da  árvore  usando  os  algoritmos  de 
+transversalidade in-order, pre-order e post-order, segundo os modelos a seguir nos quais os 
+valores utilizados são meramente ilustrativos:  
+ In-order: {D, B, E, A, F, C, G} 
+ Pre-order: {A, B, D, E, C, F, G}  
+ Post-order: {D, E, B, F, G, C, A} 
+d) Uma lista dos valores armazenados em todas as folhas da árvore gerada segundo o modelo 
+a seguir, para apenas 5 folhas:  
+Folhas: [1, 5, 7, 8, 12] 
+ 
+Página | 3 de 4  
+ 
+Frank Coelho de Alcantara 
+Exercicios, pesquisas e atividades 
+EXERCÍCIOS AVALIAÇÃO INDIVIDUAL 
+e) Uma lista do resultado da busca de 10 valores aleatoriamente gerados entre 300 e 575 e o 
+diagnóstico da existência, ou não, deste número na árvore gerada. Este diagnóstico deve ser 
+feito com as palavras: presente e ausente, conforme o modelo a seguir para dois valores :  
+Valor gerado: 312; Diagnóstico: Presente 
+Valor gerado: 542; Diagnóstico: Ausente 
+Observação, os valores utilizados para criar o array serão gerados de forma aleatória, 
+sendo assim, não há nenhum problema que existam valores repetidos nos vértices da árvore. Além 
+disso, lembre-se uma estrutura de dados precisa da definição de uma arquitetura de memória e de 
+no mínimo, um método para inclusão, um para exclusão e um para busca. 
+A  operação  desta  árvore  uma  vez  montada,  será  validada  por  meio  de  um  conjunto  de 
+operações de busca, inserção e exclusão. Para validar estas operações você deverá criar uma função de 
+validação, segundo a seguinte funcionalidade.  
+A função de validação chamada de valida, deve receber uma árvore binária e devolver True 
+se a árvore fornecida for uma árvore binária de busca e False caso não seja uma árvore binária de busca.  
+Para  validar  sua  ávore  você  deverá  inserir  10  vértices  novos,  cujos  valores  sejam 
+aleatoriamente  gerados,  usando  o  mesmo  algoritmo  de  geração  de  números  randômicos.  A  cada 
+inserção  devem  ser  medidos  os  temos  de  inserção  e  a  validade  da  árvore  resultante.  A  saída  deste 
+processo será indicada por uma saída na forma:  
+Inserções: 10; ávores geradas 10; árvores validadas 10. 
+Todas as árvores geradas devem ser impressas segundo a regra explicita neste documento.  
+ Para garantir que as rotinas de inserção e exclusão estejam corretas você também precisará fazer 
+10 exclusões a partir de números aleatórios. Você deverá gerar números aleatórios até que o número 
+gerado tenha sido incluído na árvore original, ou esteja disponível na árvore depois dos processos de 
+inclusão. A exclusão será validada pela saída indicada a seguir:  
+Exclusões: 10; ávores geradas 10; árvores validadas 10. 
+'''
+from random import randint
+
+class NodoArvore:
+  def __init__(self, chave=None, esquerda=None, direita=None):
+    self.chave = chave
+    self.esquerda = esquerda
+    self.direita = direita
+    
+def insere(raiz, nodo):
+  if raiz is None:
+    raiz = node
+  elif raiz.chave < nodo.chave:
+    if raiz.direita is None:
+      raiz.direita = nodo
+    else:
+      insere(raiz.direita, nodo)
+  else:
+    if raiz.esquerda is None:
+      raiz.esquerda = nodo
+    else:
+      insere(raiz.esquerda, nodo)
+
+def _min(self):
+  if self.left is None:
+    return self
+  else:
+    return self.left._min()
+ 
+def _remove_min(self):
+  if self.left is None: 
+    return self.right
+  self.left = self.left._removeMin()
+  return self
+
+def pre_ordem(raiz):
+  if not raiz:
+    return
+  print(raiz.chave,end='')
+  print(',',end='')
+  pre_ordem(raiz.esquerda)
+  pre_ordem(raiz.direita)  
+
+def em_ordem(raiz):
+  if not raiz:
+    return
+  em_ordem(raiz.esquerda)
+  print(raiz.chave,end='')
+  print(',',end='')
+  em_ordem(raiz.direita) 
+
+def pos_ordem(raiz):
+  if not raiz:
+    return
+  pos_ordem(raiz.esquerda)
+  pos_ordem(raiz.direita)
+  print(raiz.chave,end='')
+  print(',',end='')
+
+def folhas(self,nodo=None):
+    if nodo is None:
+      nodo = self.chave
+    if self.esquerda != None:
+      folhas(self.esquerda)
+    if self.direita != None:
+      folhas(self.direita)
+    if self.esquerda is None and self.direita is None:
+      print(self.chave,end='')
+      print(',',end='')
+
+def busca(raiz, chave):
+  if raiz is None:
+    return None
+  if raiz.chave == chave:
+    return raiz
+  if raiz.chave < chave:
+    return busca(raiz.direita, chave)
+  return busca(raiz.esquerda, chave)
+
+#=======================================================
+array=[]
+num_nodes = randint(10,26)
+i=0
+while i != num_nodes:
+  random = randint(1, 1000)
+  array.append(random)
+  i+=1
+print("\nArray Gerado:",array)
+
+
+
+raiz = NodoArvore(array[0])
+for chave in array[1:]:
+    nodo = NodoArvore(chave)
+    insere(raiz, nodo)
+
+print("\n\nPre-Order: ",end='')
+print("{",end=''),pre_ordem(raiz),print("}")
+
+print("\n\nIn-Order: ",end='')
+print("{",end=''),em_ordem(raiz),print("}")
+
+print("\n\nPost-Order: ",end='')
+print("{",end=''),pos_ordem(raiz),print("}")
+
+print("\n\nFolhas: ",end='')
+print("[",end=''),folhas(raiz),print("]")
+
+
+array2=[]
+j=0
+while j != 10:
+  search = randint(300,575)
+  array2.append(search)
+  j+=1
+print("\n\nBuscar:",array2)
+for chave in array2:
+    resultado = busca(raiz, chave)
+    if resultado:
+        print("\nValor Gerado: {} \t\tDiagnóstico: Presente".format(chave))
+    else:
+        print("\nValor Gerado: {} \t\tDiagnóstico: Ausente".format(chave))
+
+array3=[]
+k=0
+while k != 10:
+  rand = randint(1,1000)
+  add = NodoArvore(rand)
+  insere(raiz,add)
+  array3.append(rand)
+  k+=1
+print("\n\n")
+em_ordem(raiz)
+print("\n\nInserções: ",len(array3),"\t\t Árvores Geradas: ",len(array3),"\t\t Árvores Validadas: ",len(array3))
