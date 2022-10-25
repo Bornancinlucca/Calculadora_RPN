@@ -1,0 +1,141 @@
+// LUCCA BORNANCIN PEDRONI SILVA
+/*
+Sua  tarefa  será  construir  um  grafo,  com  10  vértices  cujos  valores  serão  aleatoriamente 
+selecinados em um conjunto de inteiros contendo números inteiros entre 1 e 100. Cada vértice terá 
+um número aleatório de arestas menor ou igual a três.  
+Você  deverá  criar  este  grafo,  armazenando  estes  vértices  e  arestas  em  uma  tabela  de 
+adjacências e em uma lista de adjacências, medindo o tempo necessário para criar estas estruturas de 
+dados. Estas duas tabelas deverão ser salvas em arquivos de texto chamados de tabela_adjacencias.txt 
+e lista_adjacencias.txt respectivamente. Estes arquivos devem ser salvos no site repl.it 
+Para que seja possível verificar as diferenças de tempos de criação destas estruturas, uma vez 
+que o algoritmo esteja pronto, você deverá mudar o tamanho do gráfico para 10.000 de itens e repetir 
+o processo de ciração no mínimo 50 vezes, anotando os tempos de criação apresentando estas médias 
+para a tabela de adjacencias e para a lista de adjacencias. 
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define true 1
+#define false 0
+
+typedef int bool;
+
+// ESTRUTURANDO UM GRAFO
+typedef struct adjacency{
+  int vertex; // vertice de destino
+  struct adjacency *next; // proximo elemento
+} ADJ;
+
+typedef struct vertice{
+ADJ *head; // cabeça da lista
+}VTX;
+
+typedef struct graph{
+  int vertex; // numero de vertices 
+  int edge; // numero de arestas
+  VTX *adj; // arranjo de vertices do grafo
+}GPH;
+
+//CRIANDO O GRAFO
+GPH *createGraph (int v){
+  int i;
+  GPH *g = (GPH *)malloc(sizeof(GPH)); // aloca espaço para o grafo
+  g->vertex = v; // atualiza o numero de vertices
+  g->edge = 0; // atualiza o numero de arestas
+  g->adj = (VTX *)malloc(v*sizeof(VTX));// aloca o arranjo com o numero de vertices
+  
+  for(i=0; i<v; i++){
+    g->adj[i].head = NULL; // torna todas as arestas NULL
+  }
+  return(g);
+}
+
+//ADICIONANDO ADJACÊNCIA AO GRAFO
+ADJ *createAdj (int v){
+  ADJ *temp = (ADJ *)malloc(sizeof(ADJ)); //aloca espaco aresta
+  temp->vertex = v;
+  temp->next = NULL;
+  return(temp);
+}
+// ADICIONANDO UMA ARESTA AO GRAFO
+bool create_edge(GPH *gph, int vi, int vf){
+  if(!gph) return (false);
+  if((vf<0)||(vf >= gph->vertex))return(false);
+  if((vi<0)||(vi >= gph->vertex))return(false);
+
+  ADJ *nw = createAdj(vf);
+  nw->next = gph->adj[vi].head;
+  gph->adj[vi].head = nw;
+  gph->edge++;
+  return(true);
+  }
+// IMPRIME UMA LISTA DE ADJACÊNCIAS
+void printList(GPH *gph){
+  printf("\nVértices: %d. \nArestas: %d. \n\n<< Lista de Adjacências >>\n", gph->vertex, gph->edge);
+  int i;
+  for(i=0; i<gph->vertex; i++){
+    printf("v%d:",i);
+    ADJ *adj = gph->adj[i].head;
+    while(adj){
+      printf("v%d ", adj->vertex);
+      adj = adj->next;
+    }
+    printf("\n");
+  }
+}
+// ARMAZENA A LISTA DE ADJACÊNCIAS NO TXT
+void printArq(GPH *gph){
+  FILE *arq;
+  arq = fopen("Lista_de_Adjacências","a");
+  fprintf(arq,"\nVértices: %d. \nArestas: %d. \n\n<< Lista de Adjacências >>\n", gph->vertex, gph->edge);
+  int i;
+  for(i=0; i<gph->vertex; i++){
+    fprintf(arq,"v%d:",i);
+    ADJ *adj = gph->adj[i].head;
+    while(adj){
+      fprintf(arq,"v%d ", adj->vertex);
+      adj = adj->next;
+    }
+    fprintf(arq,"\n");
+    
+  }fclose(arq);
+
+}
+
+// IMPRIME UMA MATRIZ DE ADJACÊNCIAS
+int main() {
+  FILE *arq;
+  arq = fopen("Lista_de_Adjacências","a");
+  printf("\n");
+  time_t inicio = time(NULL);
+  GPH *g = createGraph(10);
+  create_edge(g, 0, 1);
+  create_edge(g, 0, 2);
+  create_edge(g, 0, 5);
+  create_edge(g, 1, 0);
+  create_edge(g, 1, 9);
+  create_edge(g, 2, 3);
+  create_edge(g, 2, 6);
+  create_edge(g, 2, 8);
+  create_edge(g, 3, 7);
+  create_edge(g, 4, 3);
+  create_edge(g, 4, 5);
+  create_edge(g, 5, 5);
+  create_edge(g, 5, 9);
+  create_edge(g, 6, 7);
+  create_edge(g, 6, 3);
+  create_edge(g, 6, 4);
+  create_edge(g, 7, 3);
+  create_edge(g, 7, 8);
+  create_edge(g, 8, 4);
+  create_edge(g, 9, 0);
+  create_edge(g, 9, 5);
+  create_edge(g, 9, 8);
+  time_t dif = time(NULL) - inicio;
+  printList(g);
+  printArq(g);
+  fprintf(arq,"Tempo de Criação: %ld s", dif);
+  fclose(arq);
+}
