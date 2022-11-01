@@ -1,0 +1,101 @@
+#LUCCA BORNANCIN PEDRONI SILVA
+'''
+Sua  tarefa  será  construir  um  grafo,  com  20  vértices  cujos  valores  serão  aleatoriamente 
+selecinados em um conjunto de inteiros contendo números inteiros entre 1 e 100. Cada vértice terá um 
+número aleatório de arestas menor ou igual a três. Cada aresta terá um peso definido por um número 
+inteiro positivo aleatoriament definido entre 1 e 20. Você deverá criar este grafo, armazenando estes 
+vértices  e  arestas  em  uma  tabela  de  adjacências  ou  em  uma  lista  de  adjacências,  nos  dois  caso 
+armazenando o peso definido para cada uma delas. 
+Seu  objetivo  será,  usando  o  algoritmo  de  menor  distância  de  Dijkstra,  imprimir  a  lista  de 
+menores  distâncias,  destacando  a  ordem  de  visitação  dos  vértices  entre  um  vertice  inicial  da  sua 
+escolha e todos os outros 19 vértices deste grafo.  
+Para que este programa possa ser verificado, você deverá imprir, além da lista de caminhos e 
+do  valor  da  menor  distância  uma  lista  de  pesos  de  cada  aresta  de  cada  um  dos  vértices  segundo  o 
+modelo:  [1,2,  19],  neste  conjunto,  o  primeiro  número  indica  o  vertice  1,  o  segundo  o  vertice  2  e  o 
+terceiro o peso da aresta entre os vértices 1 e 2.  
+'''
+import sys
+
+vertices = [[0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0],
+            [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+            [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+            [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0]]
+            
+edges =    [[0, 8, 0, 0, 0, 0, 3, 0, 0, 0, 0, 9, 0, 0, 0, 0, 20, 0, 0, 0],
+            [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 13, 0, 17, 0, 0, 0, 0, 0],
+            [0, 0, 10, 0, 14, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 5, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 15, 0, 0, 0, 16, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 1],
+            [6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 12],
+            [0, 8, 0, 0, 4, 0, 0, 0, 15, 0, 0, 0, 0, 0, 10, 0, 0, 0, 3, 0],
+            [0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 20, 0, 0],
+            [1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 7, 19, 0, 0, 0, 2, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 14, 5, 0, 0, 0, 0, 3, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 20],
+            [0, 13, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 7, 0],
+            [0, 19, 0, 16, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+            [1, 0, 0, 0, 0, 0, 15, 0, 0, 0, 10, 0, 0, 0, 3, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 8, 0, 0, 3, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 14, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 11],
+            [0, 0, 0, 0, 0, 17, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 1, 0, 20, 0]]
+
+# Find which vertex is to be visited next
+def to_be_visited():
+    global visited_and_distance
+    v = -10
+    for index in range(num_of_vertices):
+        if visited_and_distance[index][0] == 0 \
+            and (v < 0 or visited_and_distance[index][1] <=
+                 visited_and_distance[v][1]):
+            v = index
+    return v
+
+
+num_of_vertices = len(vertices[0])
+
+visited_and_distance = [[0, 0]]
+for i in range(num_of_vertices-1):
+    visited_and_distance.append([0, sys.maxsize])
+
+for vertex in range(num_of_vertices):
+
+    # Find next vertex to be visited
+    to_visit = to_be_visited()
+    for neighbor_index in range(num_of_vertices):
+
+        # Updating new distances
+        if vertices[to_visit][neighbor_index] == 1 and \
+                visited_and_distance[neighbor_index][0] == 0:
+            new_distance = visited_and_distance[to_visit][1] \
+                + edges[to_visit][neighbor_index]
+            if visited_and_distance[neighbor_index][1] > new_distance:
+                visited_and_distance[neighbor_index][1] = new_distance
+        
+        visited_and_distance[to_visit][0] = 1
+
+i = 0
+
+for distance in visited_and_distance:
+    print("DIJKSTRA SHORTEST PATH:\n ")
+    print("Distância do vértice ", 0 + i,
+          " ao vértice inicial: ", distance[1])
+    i = i + 1
