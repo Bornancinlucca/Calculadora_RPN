@@ -1,0 +1,94 @@
+# LUCCA BORNANCIN
+'''
+Sua tarefa será construir uma hash table usando como estrutura base uma árvore heap que use 
+como índice o resultado de uma função de hash disponível na internet. 
+Esta hash Table deve ser capaz de armazenar senhas (strings) com no mínimo 10 caracteres e 
+no máximo 50 caracteres.
+No seu trabalho, como comentário, deve constar a referência para a função de hash escolhida 
+para a criação do índice da árvore heap. 
+Você deverá criar, no mínimo, uma função de inclusão, exclusão, e busca. A função de inclusão 
+deve retornar Falso, sempre que o elemento a ser inserido já exista na tabela.
+'''
+
+# ===================================================================
+#                     FUNÇÃO DE CRIAÇÃO DO HEAP
+# ===================================================================
+def heapify(arr, n, i):
+  maior = i
+  esq = 2*i+1 
+  dir = 2*i+2
+
+  if esq < n and arr[i] < arr[esq]:
+    maior = esq
+
+  if dir < n and arr[i] < arr[dir]:
+    maior = dir
+
+  if maior != i:
+    arr[i], arr[maior] = arr[maior],arr[i]
+    heapify(arr, n, maior)
+
+# ===================================================================
+#                       FUNÇÃO PARA INSERIR
+# ===================================================================
+def inserir(array, num):
+  tamanho = len(array)
+  if tamanho == 0:
+    array.append(num)
+  else:
+    array.append(num);
+    for i in range((tamanho//2)-1, -1, -1):
+      heapify(array, tamanho, i)
+      
+# ===================================================================
+#                       FUNÇÃO PARA DELETAR
+# ===================================================================
+def deleta(array, num):
+  tamanho = len(array)
+  i = 0
+  for i in range(0, tamanho):
+    if num == array[i]:
+        break
+
+  array[i], array[tamanho-1] = array[tamanho-1], array[i]
+  array.remove(num)
+
+  for i in range((len(array)//2)-1, -1, -1):
+    heapify(array, len(array), i)
+
+
+# ===================================================================
+#                               MAIN
+# ===================================================================
+arr = []
+i = 0
+while i != 10: # mudar para 10
+  senha = input("\nDigite a sua senha: ")
+  if len(senha) < 10 or len(senha) > 50:
+    print("\nSenha inválida! Sua senha deve ter entre 10 e 50 caracteres...")
+    senha = input("\nDigite a sua senha:")
+  arr.append(senha)
+  i=i+1
+
+
+hash = []
+n = 0
+num = 0
+while n != 10:
+  num = len(arr[n])%10
+  hash.append(num)
+  n = n+1
+
+
+array = []
+j = 0
+while j!= 10:
+  array.append((hash[j],arr[j]))
+  j = j+1
+
+heap = []
+m = 0
+while m != 10:
+  inserir(heap,array[m])
+  m = m+1
+print("\nHash Table: ",heap)
